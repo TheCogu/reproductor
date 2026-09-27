@@ -1,0 +1,1137 @@
+
+/* =====================================================
+   GENERAL
+===================================================== */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-width: 100%;
+    background: transparent;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+
+/* =====================================================
+   REPRODUCTOR
+===================================================== */
+
+.player {
+
+    position: relative;
+
+    width: 100%;
+    max-width: none;
+
+    margin: 0;
+    padding: 0;
+
+    background: #000;
+
+    overflow: hidden;
+
+    user-select: none;
+    -webkit-user-select: none;
+
+    line-height: 1;
+}
+
+
+/* =====================================================
+   VIDEO
+===================================================== */
+
+.video-container {
+
+    position: relative;
+
+    width: 100%;
+
+    aspect-ratio: 16 / 9;
+
+    background: #000;
+
+    overflow: hidden;
+}
+
+
+#video {
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    background: #000;
+
+    object-fit: contain;
+}
+
+
+/* =====================================================
+   AUDIO
+===================================================== */
+
+#audioPlayer {
+    display: none;
+}
+
+
+/* =====================================================
+   BOTÓN PLAY CENTRAL
+===================================================== */
+
+.center-play {
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    width: 70px;
+    height: 70px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background:
+        rgba(0,0,0,.65);
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+
+    z-index: 20;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity .2s ease,
+        visibility .2s ease,
+        transform .2s ease;
+
+    padding: 0;
+}
+
+
+.player.paused .center-play {
+
+    opacity: 1;
+    visibility: visible;
+}
+
+
+.center-play:hover {
+
+    transform:
+        translate(-50%, -50%)
+        scale(1.08);
+}
+
+
+/* =====================================================
+   ICONO PLAY CENTRAL
+===================================================== */
+
+.center-play.play-icon::before {
+
+    content: "";
+
+    width: 0;
+    height: 0;
+
+    border-top:
+        14px solid transparent;
+
+    border-bottom:
+        14px solid transparent;
+
+    border-left:
+        20px solid white;
+
+    margin-left: 5px;
+}
+
+
+/* =====================================================
+   CONTROLES
+===================================================== */
+
+.controls {
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    width: 100%;
+
+    padding:
+        28px 12px 12px;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(0,0,0,.95),
+            rgba(0,0,0,.65),
+            transparent
+        );
+
+    z-index: 30;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition:
+        opacity .25s ease,
+        visibility .25s ease;
+}
+
+
+.player.show-controls .controls,
+.player.paused .controls {
+
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* =====================================================
+   BARRA DE PROGRESO
+===================================================== */
+
+.progress {
+
+    display: block;
+
+    width: 100%;
+    height: 5px;
+
+    margin:
+        0 0 9px 0;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    background:
+        rgba(255,255,255,.4);
+
+    border-radius: 5px;
+
+    cursor: pointer;
+}
+
+
+.progress::-webkit-slider-thumb {
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 13px;
+    height: 13px;
+
+    border-radius: 50%;
+
+    background: white;
+
+    cursor: pointer;
+}
+
+
+.progress::-moz-range-thumb {
+
+    width: 13px;
+    height: 13px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: white;
+
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   BOTONES
+===================================================== */
+
+.buttons {
+
+    display: flex;
+
+    align-items: center;
+
+    width: 100%;
+
+    gap: 6px;
+
+    min-width: 0;
+}
+
+
+.buttons button {
+
+    flex:
+        0 0 auto;
+
+    height: 34px;
+
+    min-width: 36px;
+
+    padding:
+        0 7px;
+
+    border: none;
+
+    border-radius: 5px;
+
+    background:
+        rgba(0,0,0,.55);
+
+    color: white;
+
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+
+.buttons button:hover {
+
+    background:
+        rgba(255,255,255,.2);
+}
+
+
+/* =====================================================
+   PLAY / PAUSA
+===================================================== */
+
+#playBtn {
+
+    width: 38px;
+
+    min-width: 38px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+}
+
+
+#playBtn.play-icon::before {
+
+    content: "";
+
+    width: 0;
+    height: 0;
+
+    border-top:
+        8px solid transparent;
+
+    border-bottom:
+        8px solid transparent;
+
+    border-left:
+        12px solid white;
+
+    margin-left: 3px;
+}
+
+
+#playBtn.pause-icon {
+
+    gap: 4px;
+}
+
+
+#playBtn.pause-icon::before,
+#playBtn.pause-icon::after {
+
+    content: "";
+
+    width: 4px;
+    height: 16px;
+
+    display: block;
+
+    background: white;
+
+    border-radius: 1px;
+}
+
+
+/* =====================================================
+   TIEMPO
+===================================================== */
+
+.time {
+
+    flex:
+        0 0 auto;
+
+    color: white;
+
+    font-size: 13px;
+
+    white-space: nowrap;
+
+    margin:
+        0 2px;
+}
+
+
+/* =====================================================
+   VOLUMEN
+===================================================== */
+
+.volume {
+
+    flex:
+        0 1 80px;
+
+    width: 80px;
+
+    min-width: 40px;
+
+    height: 4px;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    background:
+        rgba(255,255,255,.4);
+
+    cursor: pointer;
+}
+
+
+.volume::-webkit-slider-thumb {
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 12px;
+    height: 12px;
+
+    border-radius: 50%;
+
+    background: white;
+}
+
+
+.volume::-moz-range-thumb {
+
+    width: 12px;
+    height: 12px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: white;
+}
+
+
+/* =====================================================
+   SELECTORES
+===================================================== */
+
+.buttons select {
+
+    flex:
+        0 1 auto;
+
+    height: 34px;
+
+    max-width: 125px;
+
+    padding:
+        0 7px;
+
+    border: none;
+
+    border-radius: 5px;
+
+    background:
+        rgba(0,0,0,.8);
+
+    color: white;
+
+    font-size: 12px;
+
+    cursor: pointer;
+}
+
+
+.buttons select option {
+
+    background: #111;
+
+    color: white;
+}
+
+
+/* =====================================================
+   CONFIGURACIÓN
+===================================================== */
+
+.settings {
+
+    position: relative;
+
+    flex:
+        0 0 auto;
+}
+
+
+#settingsBtn {
+
+    width: 38px !important;
+
+    min-width: 38px !important;
+
+    height: 34px !important;
+
+    padding: 0 !important;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    font-size: 19px !important;
+}
+
+
+/* =====================================================
+   MENÚ CONFIGURACIÓN
+===================================================== */
+
+.settings-menu {
+
+    position: absolute;
+
+    right: 0;
+
+    bottom: 43px;
+
+    width: 150px;
+
+    padding: 6px;
+
+    background:
+        rgba(15,15,15,.98);
+
+    border-radius: 7px;
+
+    box-shadow:
+        0 4px 20px
+        rgba(0,0,0,.6);
+
+    display: none;
+
+    z-index: 100;
+}
+
+
+.settings.open .settings-menu {
+
+    display: block;
+}
+
+
+/* =====================================================
+   TÍTULO CONFIGURACIÓN
+===================================================== */
+
+.settings-title {
+
+    color: #aaa;
+
+    font-size: 12px;
+
+    padding:
+        7px 9px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.12);
+
+    margin-bottom: 3px;
+}
+
+
+/* =====================================================
+   VELOCIDADES
+===================================================== */
+
+.settings-menu button {
+
+    display: block;
+
+    width: 100% !important;
+
+    min-width: 0 !important;
+
+    height: 32px !important;
+
+    border: none;
+
+    border-radius: 4px;
+
+    background: transparent;
+
+    color: white;
+
+    text-align: left;
+
+    padding:
+        0 10px !important;
+
+    font-size: 13px !important;
+
+    cursor: pointer;
+}
+
+
+.settings-menu button:hover {
+
+    background:
+        rgba(255,255,255,.15);
+}
+
+
+.settings-menu button.active {
+
+    background:
+        rgba(255,255,255,.22);
+
+    font-weight: bold;
+}
+
+
+/* =====================================================
+   PANTALLA COMPLETA
+===================================================== */
+
+#fullscreenBtn {
+
+    width: 38px;
+
+    min-width: 38px;
+
+    font-size: 20px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* =====================================================
+   FULLSCREEN
+===================================================== */
+
+.player:fullscreen {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    max-width: none;
+
+    margin: 0;
+
+    background: #000;
+}
+
+
+.player:fullscreen .video-container {
+
+    width: 100vw;
+    height: 100vh;
+
+    aspect-ratio: auto;
+
+    background: #000;
+}
+
+
+.player:fullscreen #video {
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+}
+
+
+/* =====================================================
+   SAFARI
+===================================================== */
+
+.player:-webkit-full-screen {
+
+    width: 100vw;
+    height: 100vh;
+
+    background: #000;
+}
+
+
+.player:-webkit-full-screen .video-container {
+
+    width: 100vw;
+    height: 100vh;
+
+    aspect-ratio: auto;
+}
+
+
+.player:-webkit-full-screen #video {
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+}
+
+
+/* =====================================================
+   TABLET
+===================================================== */
+
+@media (max-width: 800px) {
+
+    .buttons {
+
+        gap: 4px;
+    }
+
+
+    .buttons button {
+
+        min-width: 34px;
+
+        padding:
+            0 5px;
+
+        font-size: 13px;
+    }
+
+
+    .time {
+
+        font-size: 11px;
+    }
+
+
+    .volume {
+
+        width: 60px;
+    }
+
+
+    .buttons select {
+
+        max-width: 105px;
+
+        font-size: 11px;
+    }
+}
+
+
+/* =====================================================
+   CELULAR
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .controls {
+
+        padding:
+            20px 7px 7px;
+    }
+
+
+    .buttons {
+
+        display: grid;
+
+        grid-template-columns:
+            34px
+            43px
+            43px
+            1fr
+            34px
+            75px
+            75px
+            36px
+            36px;
+
+        gap: 4px;
+
+        width: 100%;
+    }
+
+
+    .buttons button {
+
+        width: 100%;
+
+        min-width: 0;
+
+        height: 32px;
+
+        padding: 0;
+
+        font-size: 12px;
+    }
+
+
+    #playBtn {
+
+        width: 34px;
+
+        min-width: 34px;
+    }
+
+
+    #backBtn,
+    #forwardBtn {
+
+        width: 43px;
+
+        min-width: 43px;
+    }
+
+
+    .time {
+
+        overflow: hidden;
+
+        text-overflow: ellipsis;
+
+        font-size: 10px;
+
+        min-width: 0;
+
+        text-align: center;
+    }
+
+
+    .volume {
+
+        display: none;
+    }
+
+
+    .buttons select {
+
+        width: 100%;
+
+        min-width: 0;
+
+        max-width: none;
+
+        height: 32px;
+
+        padding:
+            0 2px;
+
+        font-size: 10px;
+    }
+
+
+    #audioSelect {
+        grid-column: 6;
+    }
+
+
+    #subtitleSelect {
+        grid-column: 7;
+    }
+
+
+    .settings {
+        grid-column: 8;
+    }
+
+
+    #settingsBtn {
+
+        width: 36px !important;
+
+        min-width: 36px !important;
+
+        height: 32px !important;
+
+        font-size: 18px !important;
+    }
+
+
+    #fullscreenBtn {
+
+        grid-column: 9;
+
+        width: 36px;
+
+        min-width: 36px;
+
+        font-size: 19px;
+    }
+
+
+    .settings-menu {
+
+        bottom: 40px;
+
+        right: 0;
+
+        width: 140px;
+    }
+
+
+    .settings-menu button {
+
+        height: 30px !important;
+
+        font-size: 12px !important;
+    }
+
+
+    .center-play {
+
+        width: 58px;
+        height: 58px;
+    }
+
+
+    .center-play.play-icon::before {
+
+        border-top-width: 11px;
+
+        border-bottom-width: 11px;
+
+        border-left-width: 16px;
+    }
+}
+
+
+/* =====================================================
+   CELULAR PEQUEÑO
+===================================================== */
+
+@media (max-width: 430px) {
+
+    .controls {
+
+        padding:
+            17px 5px 5px;
+    }
+
+
+    .buttons {
+
+        grid-template-columns:
+            30px
+            39px
+            39px
+            1fr
+            30px
+            62px
+            62px
+            32px
+            34px;
+
+        gap: 3px;
+    }
+
+
+    .buttons button {
+
+        height: 29px;
+
+        font-size: 10px;
+    }
+
+
+    #playBtn {
+
+        width: 30px;
+
+        min-width: 30px;
+    }
+
+
+    #backBtn,
+    #forwardBtn {
+
+        width: 39px;
+
+        min-width: 39px;
+    }
+
+
+    .time {
+
+        font-size: 8px;
+    }
+
+
+    .buttons select {
+
+        height: 29px;
+
+        font-size: 8px;
+    }
+
+
+    #audioSelect,
+    #subtitleSelect {
+
+        width: 62px;
+
+        min-width: 62px;
+    }
+
+
+    #settingsBtn {
+
+        width: 32px !important;
+
+        min-width: 32px !important;
+
+        height: 29px !important;
+
+        font-size: 16px !important;
+    }
+
+
+    #fullscreenBtn {
+
+        width: 34px;
+
+        min-width: 34px;
+
+        font-size: 17px;
+    }
+
+
+    .settings-menu {
+
+        width: 135px;
+
+        bottom: 37px;
+    }
+
+
+    .center-play {
+
+        width: 52px;
+        height: 52px;
+    }
+}
+
+
+/* =====================================================
+   CELULAR MUY PEQUEÑO
+===================================================== */
+
+@media (max-width: 360px) {
+
+    .buttons {
+
+        grid-template-columns:
+            29px
+            36px
+            36px
+            1fr
+            29px
+            56px
+            56px
+            30px
+            32px;
+    }
+
+
+    #audioSelect,
+    #subtitleSelect {
+
+        width: 56px;
+
+        min-width: 56px;
+
+        font-size: 7px;
+    }
+
+
+    .time {
+
+        font-size: 7px;
+    }
+
+
+    #settingsBtn {
+
+        width: 30px !important;
+
+        min-width: 30px !important;
+    }
+
+
+    #fullscreenBtn {
+
+        width: 32px;
+
+        min-width: 32px;
+    }
+}
+
+
+/* =====================================================
+   OCULTAR CONTROLES NATIVOS
+===================================================== */
+
+video::-webkit-media-controls {
+
+    display: none !important;
+}
+
+
+video::-webkit-media-controls-enclosure {
+
+    display: none !important;
+}
