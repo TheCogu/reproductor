@@ -1,0 +1,522 @@
+```css
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background: transparent;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    overflow-x: hidden;
+}
+
+/* =========================================================
+   REPRODUCTOR
+   ========================================================= */
+
+.player {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    background: #000;
+    position: relative;
+    overflow: hidden;
+}
+
+.video-container {
+    width: 100%;
+    position: relative;
+    background: #000;
+    aspect-ratio: 16 / 9;
+}
+
+/* =========================================================
+   VIDEO
+   ========================================================= */
+
+video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    background: #000;
+}
+
+audio {
+    display: none;
+}
+
+/* Ocultar controles nativos */
+video::-webkit-media-controls {
+    display: none !important;
+}
+
+video::-webkit-media-controls-enclosure {
+    display: none !important;
+}
+
+/* =========================================================
+   CONTROLES
+   ========================================================= */
+
+.controls {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    padding: 10px;
+
+    background:
+        linear-gradient(
+            transparent,
+            rgba(0, 0, 0, 0.90)
+        );
+
+    opacity: 0;
+    transform: translateY(10px);
+
+    transition:
+        opacity 0.25s ease,
+        transform 0.25s ease;
+
+    z-index: 10;
+}
+
+/* Mostrar controles */
+.player.controls-visible .controls,
+.player:hover .controls,
+.player.paused .controls {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* =========================================================
+   BARRA DE PROGRESO
+   ========================================================= */
+
+.progress {
+    width: 100%;
+    height: 5px;
+
+    margin-bottom: 8px;
+
+    cursor: pointer;
+    appearance: none;
+
+    background: rgba(255,255,255,0.35);
+    border-radius: 10px;
+}
+
+.progress::-webkit-slider-thumb {
+    appearance: none;
+
+    width: 13px;
+    height: 13px;
+
+    border-radius: 50%;
+    background: #fff;
+
+    cursor: pointer;
+}
+
+.progress::-moz-range-thumb {
+    width: 13px;
+    height: 13px;
+
+    border: 0;
+    border-radius: 50%;
+    background: #fff;
+
+    cursor: pointer;
+}
+
+/* =========================================================
+   BOTONES
+   ========================================================= */
+
+.buttons {
+    display: grid;
+
+    grid-template-columns:
+        38px
+        45px
+        45px
+        1fr
+        38px
+        90px
+        90px
+        40px
+        40px;
+
+    align-items: center;
+
+    gap: 5px;
+}
+
+.buttons button {
+    height: 34px;
+
+    border: 0;
+    border-radius: 4px;
+
+    background: transparent;
+    color: #fff;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease;
+}
+
+.buttons button:hover {
+    background: rgba(255,255,255,0.15);
+}
+
+.buttons button:active {
+    transform: scale(0.92);
+}
+
+/* =========================================================
+   PLAY / PAUSE
+   ========================================================= */
+
+.play-icon {
+    position: relative;
+}
+
+.play-icon::before {
+    content: "";
+
+    width: 0;
+    height: 0;
+
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 12px solid #fff;
+
+    margin-left: 3px;
+}
+
+.pause-icon::before,
+.pause-icon::after {
+    content: "";
+
+    width: 4px;
+    height: 16px;
+
+    background: #fff;
+
+    position: absolute;
+}
+
+.pause-icon::before {
+    left: calc(50% - 6px);
+}
+
+.pause-icon::after {
+    left: calc(50% + 2px);
+}
+
+/* =========================================================
+   TIEMPO
+   ========================================================= */
+
+#time {
+    color: #fff;
+
+    font-size: 13px;
+
+    white-space: nowrap;
+}
+
+/* =========================================================
+   VOLUMEN
+   ========================================================= */
+
+#volume {
+    width: 90px;
+    cursor: pointer;
+}
+
+/* =========================================================
+   SELECT
+   ========================================================= */
+
+.buttons select {
+    width: 100%;
+    height: 32px;
+
+    border: 0;
+    border-radius: 4px;
+
+    padding: 0 5px;
+
+    background: rgba(0,0,0,0.75);
+    color: #fff;
+
+    font-size: 12px;
+
+    cursor: pointer;
+}
+
+.buttons select option {
+    background: #111;
+    color: #fff;
+}
+
+/* =========================================================
+   CONFIGURACIÓN
+   ========================================================= */
+
+.settings {
+    position: relative;
+}
+
+.settings-menu {
+    position: absolute;
+
+    right: 0;
+    bottom: 42px;
+
+    width: 145px;
+
+    padding: 6px;
+
+    background: rgba(20,20,20,0.97);
+
+    border-radius: 6px;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,0.5);
+
+    display: none;
+
+    z-index: 100;
+}
+
+.settings.open .settings-menu {
+    display: block;
+}
+
+.settings-title {
+    padding: 8px;
+
+    color: #aaa;
+
+    font-size: 12px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.1);
+
+    margin-bottom: 3px;
+}
+
+.settings-menu button {
+    width: 100%;
+
+    height: 32px;
+
+    justify-content: flex-start;
+
+    padding-left: 10px;
+
+    border-radius: 4px;
+
+    font-size: 13px;
+}
+
+.settings-menu button.active {
+    background: rgba(255,255,255,0.18);
+}
+
+/* =========================================================
+   BOTÓN CENTRAL
+   ========================================================= */
+
+.center-play {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 65px;
+    height: 65px;
+
+    border: 0;
+    border-radius: 50%;
+
+    background: rgba(0,0,0,0.65);
+
+    cursor: pointer;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    z-index: 8;
+}
+
+.player.paused .center-play {
+    display: flex;
+}
+
+.center-play:hover {
+    background: rgba(0,0,0,0.8);
+}
+
+/* =========================================================
+   PANTALLA COMPLETA
+   ========================================================= */
+
+.player:fullscreen {
+    width: 100vw;
+    height: 100vh;
+
+    background: #000;
+}
+
+.player:fullscreen .video-container {
+    width: 100vw;
+    height: 100vh;
+
+    aspect-ratio: auto;
+}
+
+.player:fullscreen video {
+    width: 100%;
+    height: 100%;
+
+    object-fit: contain;
+}
+
+/* =========================================================
+   MÓVIL
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+    .controls {
+        padding: 6px;
+    }
+
+    .buttons {
+        grid-template-columns:
+            34px
+            43px
+            43px
+            1fr
+            34px
+            75px
+            75px
+            36px
+            36px;
+
+        gap: 2px;
+    }
+
+    .buttons button {
+        height: 32px;
+        font-size: 12px;
+    }
+
+    #volume {
+        width: 55px;
+    }
+
+    .buttons select {
+        font-size: 10px;
+        height: 30px;
+    }
+
+    #time {
+        font-size: 11px;
+    }
+
+    .center-play {
+        width: 55px;
+        height: 55px;
+    }
+}
+
+/* =========================================================
+   MÓVILES PEQUEÑOS
+   ========================================================= */
+
+@media (max-width: 430px) {
+
+    .buttons {
+        grid-template-columns:
+            30px
+            39px
+            39px
+            1fr
+            30px
+            62px
+            62px
+            32px
+            34px;
+    }
+
+    #volume {
+        display: none;
+    }
+
+    .buttons select {
+        font-size: 9px;
+        padding: 0 2px;
+    }
+
+    #time {
+        font-size: 10px;
+    }
+}
+
+/* =========================================================
+   MÓVILES MUY PEQUEÑOS
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    .buttons {
+        grid-template-columns:
+            29px
+            36px
+            36px
+            1fr
+            29px
+            56px
+            56px
+            30px
+            32px;
+    }
+
+    .buttons button {
+        font-size: 11px;
+    }
+
+    .buttons select {
+        font-size: 8px;
+    }
+
+    #time {
+        font-size: 9px;
+    }
+}
+```
