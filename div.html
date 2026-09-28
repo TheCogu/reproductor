@@ -1,0 +1,291 @@
+<div
+    class="player paused"
+    id="player">
+
+
+    <div class="video-container">
+
+
+        <!-- VIDEO -->
+
+        <video
+            id="video"
+            playsinline
+            webkit-playsinline
+            preload="auto"
+            crossorigin="anonymous">
+
+            <track
+                kind="subtitles"
+                label="Español"
+                srclang="es"
+                src="TU_SUBTITULO_ES.vtt">
+
+        </video>
+
+
+        <!-- AUDIO SEPARADO -->
+
+        <audio
+            id="audioPlayer"
+            preload="auto"
+            crossorigin="anonymous">
+        </audio>
+
+
+        <!-- PLAY CENTRAL -->
+
+        <button
+            id="centerPlay"
+            class="center-play play-icon"
+            type="button"
+            aria-label="Reproducir">
+        </button>
+
+
+        <!-- CONTROLES -->
+
+        <div class="controls">
+
+
+            <!-- PROGRESO -->
+
+            <input
+                id="progress"
+                class="progress"
+                type="range"
+                min="0"
+                max="100"
+                value="0">
+
+
+            <div class="buttons">
+
+
+                <!-- PLAY -->
+
+                <button
+                    id="playBtn"
+                    class="play-icon"
+                    type="button"
+                    aria-label="Reproducir"
+                    title="Reproducir">
+                </button>
+
+
+                <!-- -10 -->
+
+                <button
+                    id="backBtn"
+                    type="button"
+                    title="Retroceder 10 segundos">
+
+                    ↶10
+
+                </button>
+
+
+                <!-- +10 -->
+
+                <button
+                    id="forwardBtn"
+                    type="button"
+                    title="Adelantar 10 segundos">
+
+                    10↷
+
+                </button>
+
+
+                <!-- TIEMPO -->
+
+                <span
+                    id="time"
+                    class="time">
+
+                    00:00 / 00:00
+
+                </span>
+
+
+                <!-- MUTE -->
+
+                <button
+                    id="muteBtn"
+                    type="button"
+                    title="Silenciar">
+
+                    🔊
+
+                </button>
+
+
+                <!-- VOLUMEN -->
+
+                <input
+                    id="volume"
+                    class="volume"
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    value="1">
+
+
+                <!-- AUDIO -->
+
+                <select
+                    id="audioSelect"
+                    title="Idioma de audio">
+
+                    <option value="0">
+                        Español
+                    </option>
+
+                </select>
+
+
+                <!-- SUBTÍTULOS -->
+
+                <select
+                    id="subtitleSelect"
+                    title="Subtítulos">
+
+                    <option value="-1">
+                        Subtítulos apagados
+                    </option>
+
+                    <option value="0">
+                        Español
+                    </option>
+
+                </select>
+
+
+                <!-- CONFIGURACIÓN -->
+
+                <div
+                    class="settings"
+                    id="settings">
+
+
+                    <button
+                        id="settingsBtn"
+                        type="button"
+                        title="Configuración"
+                        aria-label="Configuración">
+
+                        ⚙
+
+                    </button>
+
+
+                    <div
+                        id="settingsMenu"
+                        class="settings-menu">
+
+
+                        <div class="settings-title">
+
+                            Velocidad
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            data-speed="0.25">
+
+                            0.25×
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            data-speed="0.5">
+
+                            0.5×
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            data-speed="0.75">
+
+                            0.75×
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            data-speed="1">
+
+                            1×
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            data-speed="1.25">
+
+                            1.25×
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            data-speed="1.5">
+
+                            1.5×
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            data-speed="1.75">
+
+                            1.75×
+
+                        </button>
+
+
+                        <button
+                            type="button"
+                            data-speed="2">
+
+                            2×
+
+                        </button>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- PANTALLA COMPLETA -->
+
+                <button
+                    id="fullscreenBtn"
+                    type="button"
+                    title="Pantalla completa"
+                    aria-label="Pantalla completa">
+
+                    ⛶
+
+                </button>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
